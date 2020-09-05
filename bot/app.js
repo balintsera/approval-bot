@@ -17,15 +17,17 @@ let response;
  */
 exports.lambdaHandler = async (event, context) => {
     try {
-        let resource = new NotFound();
+        let controller = new NotFound();
         switch(event.path) {
             case '/webhook/pr':
-                resource = new WebhookPR(event.body)
+                controller = new WebhookPR(event.body)
+
                 console.log("webhook pr resource")
             break;
         }
 
-        response = resource.Response;
+        await controller.control();
+        response = controller.Response;
     } catch (err) {
         console.log(err);
         return err;

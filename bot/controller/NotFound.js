@@ -5,6 +5,10 @@ class NotFound {
         this.response = new Response(404, { message })
     }
 
+    async control() {
+        await Promise.resolve();
+    }
+
     get Response (){
         return this.response.Formatted
     }  

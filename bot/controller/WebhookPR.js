@@ -1,20 +1,20 @@
 const Response = require('../model/Response')
+const ReviewItem = require('../table_data_gw/ReviewItem')
+const WebhookPrService = require('../services/WebhookPrService')
 
 class WebhookPR {
     constructor(body) {
         this._response = new Response(201, "Created")
         try {
-            console.log("body", body)
             this._body = JSON.parse(body)
         } catch {
             // wrong body
             this._response = new Response(400, { message: "Json parse error" })
         }
+    }
 
-        // make a db resource of this payload
-        // where primary key is a composite of PrID:ReviewerID, secondary global indexes are pr:status, pr:hash
-
-        console.log("parsed body", this._body)
+    async control(){
+        await (new WebhookPrService(this._body)).convertToReviewItemAndPutIntoDB()
     }
 
     get Response() {

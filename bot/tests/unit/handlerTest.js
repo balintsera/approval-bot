@@ -3,20 +3,17 @@
 const app = require('../../app.js');
 const chai = require('chai');
 const expect = chai.expect;
-var event, context;
+const event = require('../../../events/pr-webhook-event.json')
 
-describe('Tests index', function () {
-    it('verifies successful response', async () => {
+describe('app.ja', function () {
+    it('pr webook event has a successful response', async () => {
         const result = await app.lambdaHandler(event, context)
 
         expect(result).to.be.an('object');
-        expect(result.statusCode).to.equal(200);
+        expect(result.statusCode).to.equal(201);
         expect(result.body).to.be.an('string');
 
         let response = JSON.parse(result.body);
-
-        expect(response).to.be.an('object');
-        expect(response.message).to.be.equal("hello world");
-        // expect(response.location).to.be.an("string");
     });
+
 });
